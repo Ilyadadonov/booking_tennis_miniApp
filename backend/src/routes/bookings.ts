@@ -13,7 +13,7 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
         id, slot_id, user_tg_id, user_name, status, created_at,
         slot:slots (
           id, date, time_start, time_end,
-          court:courts (id, name, description)
+          court:courts (id, name, description, maps_url)
         )
       `)
       .eq('user_tg_id', userId)

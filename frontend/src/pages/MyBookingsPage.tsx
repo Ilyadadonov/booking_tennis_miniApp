@@ -40,11 +40,17 @@ export function MyBookingsPage() {
           const slot = booking.slot
           const dateFormatted = new Date(slot.date).toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'short' })
           const timeRange = `${slot.time_start.slice(0,5)}-${slot.time_end.slice(0,5)}`
+          const mapsUrl = (slot.court as any).maps_url
           return (
             <div key={booking.id} className={styles.card}>
               <div className={styles.cardInfo}>
                 <span className={styles.courtName}>{slot.court.name}</span>
                 <span className={styles.datetime}>{dateFormatted}, {timeRange}</span>
+                {mapsUrl && (
+                  <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={styles.mapsLink}>
+                    📍 Открыть на карте
+                  </a>
+                )}
               </div>
               <button
                 className={styles.cancelBtn}

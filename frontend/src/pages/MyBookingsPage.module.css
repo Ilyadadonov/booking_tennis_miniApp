@@ -11,3 +11,11 @@
 .courtName { font-size: 16px; font-weight: 700; }
 .datetime { font-size: 13px; color: var(--hint-color); }
 .cancelBtn { flex-shrink: 0; padding: 8px 14px; border-radius: var(--radius-sm); background: rgba(229,57,53,0.1); color: var(--destructive-color); font-size: 14px; font-weight: 600; }
+
+.mapsLink {
+  font-size: 13px;
+  color: var(--link-color, #2481cc);
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 2px;
+}
