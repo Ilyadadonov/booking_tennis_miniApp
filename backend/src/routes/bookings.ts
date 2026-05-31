@@ -10,13 +10,14 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
     const { data, error } = await fastify.supabase
       .from('bookings')
       .select(`
-        id, slot_id, user_tg_id, user_name, created_at,
+        id, slot_id, user_tg_id, user_name, status, created_at,
         slot:slots (
           id, date, time_start, time_end,
           court:courts (id, name, description)
         )
       `)
       .eq('user_tg_id', userId)
+      .eq('status', 'active')
       .gte('slot.date', new Date().toISOString().split('T')[0])
       .order('created_at', { ascending: false })
 
@@ -52,7 +53,6 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
       return reply.code(409).send({ error: 'Slot is already occupied' })
     }
 
-    // Upsert user
     const userName = [user.first_name, user.last_name].filter(Boolean).join(' ')
     await fastify.supabase.from('users').upsert({
       tg_id: user.id,
@@ -73,7 +73,7 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
 
     const { data: booking, error: bookingError } = await fastify.supabase
       .from('bookings')
-      .insert({ slot_id, user_tg_id: user.id, user_name: userName })
+      .insert({ slot_id, user_tg_id: user.id, user_name: userName, status: 'active' })
       .select()
       .single()
 
@@ -92,7 +92,7 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
 
     const { data: booking, error: fetchError } = await fastify.supabase
       .from('bookings')
-      .select('id, slot_id, user_tg_id')
+      .select('id, slot_id, user_tg_id, status')
       .eq('id', id)
       .eq('user_tg_id', userId)
       .single()
@@ -101,12 +101,16 @@ const bookingsPlugin: FastifyPluginAsync = async (fastify) => {
       return reply.code(404).send({ error: 'Booking not found' })
     }
 
-    const { error: deleteError } = await fastify.supabase
+    if (booking.status === 'cancelled') {
+      return reply.code(400).send({ error: 'Booking already cancelled' })
+    }
+
+    const { error: cancelError } = await fastify.supabase
       .from('bookings')
-      .delete()
+      .update({ status: 'cancelled' })
       .eq('id', id)
 
-    if (deleteError) {
+    if (cancelError) {
       return reply.code(500).send({ error: 'Failed to cancel booking' })
     }
 
