@@ -1,0 +1,3 @@
+.page { display: flex; flex-direction: column; min-height: 100%; }
+.status { padding: 48px 16px; text-align: center; color: var(--hint-color); font-size: 15px; }
+.statusError { padding: 48px 16px; text-align: center; color: var(--destructive-color); font-size: 15px; }

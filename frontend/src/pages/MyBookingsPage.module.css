@@ -1,0 +1,13 @@
+.page { padding: 16px; }
+.heading { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.status, .statusError { padding: 48px 16px; text-align: center; }
+.statusError { color: var(--destructive-color); }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 64px 16px; text-align: center; }
+.emptyIcon { font-size: 48px; }
+.emptyHint { color: var(--hint-color); font-size: 14px; }
+.list { display: flex; flex-direction: column; gap: 10px; }
+.card { background: var(--bg-color); border-radius: var(--radius-md); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.cardInfo { display: flex; flex-direction: column; gap: 4px; }
+.courtName { font-size: 16px; font-weight: 700; }
+.datetime { font-size: 13px; color: var(--hint-color); }
+.cancelBtn { flex-shrink: 0; padding: 8px 14px; border-radius: var(--radius-sm); background: rgba(229,57,53,0.1); color: var(--destructive-color); font-size: 14px; font-weight: 600; }
