@@ -3,7 +3,12 @@ import type { Slot } from '../types'
 import { createBooking, cancelBooking } from '../api/bookings'
 import { useTelegram } from '../hooks/useTelegram'
 import styles from './BookingConfirmSheet.module.css'
-interface BookingConfirmSheetProps { slot: Slot | null; onClose: () => void }
+
+interface BookingConfirmSheetProps {
+  slot: Slot | null
+  onClose: () => void
+}
+
 export function BookingConfirmSheet({ slot, onClose }: BookingConfirmSheetProps) {
   const { user, hapticFeedback } = useTelegram()
   const queryClient = useQueryClient()
@@ -22,6 +27,12 @@ export function BookingConfirmSheet({ slot, onClose }: BookingConfirmSheetProps)
           <div className={styles.detail}><span>📅</span><span>{new Date(slot.date).toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>
           <div className={styles.detail}><span>⏰</span><span>{slot.time_start.slice(0,5)}-{slot.time_end.slice(0,5)}</span></div>
           {user && <div className={styles.detail}><span>👤</span><span>{user.first_name} {user.last_name ?? ''}</span></div>}
+          {slot.maps_url && (
+            <div className={styles.detail}>
+              <span>📍</span>
+              <a href={slot.maps_url} target="_blank" rel="noopener noreferrer" className={styles.mapsLink}>Открыть на карте</a>
+            </div>
+          )}
         </div>
         {bookMutation.isError && <p className={styles.error}>{(bookMutation.error as Error)?.message ?? 'Ошибка'}</p>}
         {cancelMutation.isError && <p className={styles.error}>{(cancelMutation.error as Error)?.message ?? 'Ошибка'}</p>}

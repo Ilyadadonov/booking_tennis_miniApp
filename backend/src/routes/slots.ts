@@ -50,7 +50,7 @@ const slotsPlugin: FastifyPluginAsync = async (fastify) => {
 
     const { data: courts, error: courtsError } = await supabase
       .from('courts')
-      .select('id, name, description')
+      .select('id, name, description, maps_url')
       .order('id')
 
     if (courtsError) {
@@ -99,6 +99,7 @@ const slotsPlugin: FastifyPluginAsync = async (fastify) => {
           .map((s) => ({
             ...s,
             court_name: court.name,
+            maps_url: court.maps_url,
             status: myBookingSlotIds.has(s.id) ? 'mine' : s.status,
             booking_id: bookingIdBySlotId.get(s.id),
           })),
