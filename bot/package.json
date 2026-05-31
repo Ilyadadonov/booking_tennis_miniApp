@@ -1,0 +1,9 @@
+{
+  "name": "tennis-booking-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "tsx watch src/index.ts", "build": "tsc", "start": "node dist/index.js" },
+  "dependencies": { "@supabase/supabase-js": "^2.45.4", "grammy": "^1.30.0" },
+  "devDependencies": { "@types/node": "^22.7.4", "tsx": "^4.19.1", "typescript": "^5.5.3" }
+}
