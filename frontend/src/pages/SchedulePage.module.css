@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.message {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--hint-color);
+  font-size: 15px;
+}

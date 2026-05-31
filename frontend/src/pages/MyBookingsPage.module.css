@@ -1,0 +1,68 @@
+.page {
+  padding: 12px 16px;
+}
+
+.message {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--hint-color);
+  font-size: 15px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 16px;
+  color: var(--hint-color);
+  font-size: 15px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background-color: var(--bg-color);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.card:active {
+  opacity: 0.7;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.courtName {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.time {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--button-color);
+}
+
+.date {
+  font-size: 13px;
+  color: var(--hint-color);
+  text-transform: capitalize;
+}
