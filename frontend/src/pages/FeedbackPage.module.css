@@ -1,0 +1,41 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 32px 24px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.icon {
+  font-size: 64px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.desc {
+  font-size: 15px;
+  color: var(--hint-color);
+  line-height: 1.5;
+}
+
+.btn {
+  margin-top: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-md);
+  background: var(--button-color);
+  color: var(--button-text-color);
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+}
