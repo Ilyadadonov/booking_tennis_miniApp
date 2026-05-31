@@ -1,0 +1,99 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sheet {
+  width: 100%;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 8px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  align-self: center;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.detailIcon {
+  width: 24px;
+  text-align: center;
+}
+
+.error {
+  color: var(--destructive-color);
+  font-size: 13px;
+  background: rgba(229, 57, 53, 0.08);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+.btnPrimary {
+  background: var(--button-color);
+  color: var(--button-text-color);
+}
+
+.btnDanger {
+  background: var(--destructive-color);
+  color: #fff;
+}
+
+.btnSecondary {
+  background: var(--secondary-bg-color);
+  color: var(--text-color);
+}
