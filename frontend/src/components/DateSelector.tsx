@@ -1,9 +1,24 @@
 import styles from './DateSelector.module.css'
-interface DateSelectorProps { selectedDate: string; onSelect: (date: string) => void }
+
+interface DateSelectorProps {
+  selectedDate: string
+  onSelect: (date: string) => void
+}
+
 function getDates() {
   const today = new Date()
-  return Array.from({ length: 7 }, (_, i) => { const d = new Date(today); d.setDate(today.getDate() + i); return { iso: d.toISOString().split('T')[0], day: d.getDate().toString(), weekday: d.toLocaleDateString('ru-RU', { weekday: 'short' }), isToday: i === 0 } })
+  return Array.from({ length: 30 }, (_, i) => {
+    const d = new Date(today)
+    d.setDate(today.getDate() + i)
+    return {
+      iso: d.toISOString().split('T')[0],
+      day: d.getDate().toString(),
+      weekday: d.toLocaleDateString('ru-RU', { weekday: 'short' }),
+      isToday: i === 0,
+    }
+  })
 }
+
 export function DateSelector({ selectedDate, onSelect }: DateSelectorProps) {
   return (
     <div className={styles.wrapper}>
