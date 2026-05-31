@@ -11,21 +11,16 @@ function extractUserIdFromInitData(initData: string, botToken: string): number |
     const params = new URLSearchParams(initData)
     const hash = params.get('hash')
     if (!hash) return null
-
     params.delete('hash')
     const dataCheckString = [...params.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([k, v]) => `${k}=${v}`)
       .join('\n')
-
     const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest()
     const expectedHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex')
-
     if (expectedHash !== hash) return null
-
     const userParam = params.get('user')
     if (!userParam) return null
-
     const user = JSON.parse(userParam) as { id: number }
     return user.id
   } catch {
@@ -77,10 +72,8 @@ const slotsPlugin: FastifyPluginAsync = async (fastify) => {
         .from('bookings')
         .select('id, slot_id')
         .eq('user_tg_id', currentUserId)
-        .in(
-          'slot_id',
-          slots.map((s) => s.id),
-        )
+        .eq('status', 'active')
+        .in('slot_id', slots.map((s) => s.id))
 
       if (myBookings) {
         for (const b of myBookings) {
