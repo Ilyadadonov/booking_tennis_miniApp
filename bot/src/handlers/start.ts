@@ -1,10 +1,32 @@
-import type { Bot } from 'grammy'
-import { InlineKeyboard } from 'grammy'
-const MINI_APP_URL = process.env.MINI_APP_URL ?? 'https://t.me/your_bot/app'
-export function registerStartHandler(bot: Bot): void {
-  bot.command('start', async (ctx) => {
-    const firstName = ctx.from?.first_name ?? 'игрок'
-    const keyboard = new InlineKeyboard().webApp('🎾 Открыть расписание', MINI_APP_URL)
-    await ctx.reply(`Привет, ${firstName}! 👋\n\nЯ помогу забронировать теннисный корт.\n\nПравила:\n• Максимум 2 активных бронирования\n• Бронирование до 7 дней вперёд\n• Отмена не позже чем за 2 часа`, { reply_markup: keyboard })
-  })
+import { Context } from 'grammy'
+import { createClient } from '@supabase/supabase-js'
+
+export async function startHandler(ctx: Context) {
+  const user = ctx.from
+  if (!user) return
+
+  const supabaseUrl = process.env.SUPABASE_URL!
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  await supabase.from('users').upsert({
+    tg_id: user.id,
+    username: user.username ?? null,
+    first_name: user.first_name,
+    last_name: user.last_name ?? null,
+  }, { onConflict: 'tg_id' })
+
+  await ctx.reply(
+    `👋 Привет, ${user.first_name}!\n\nДобро пожаловать в сервис бронирования теннисных кортов Орехово.\n\nНажми кнопку ниже чтобы открыть расписание и забронировать корт.`,
+    {
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: '🎾 Открыть расписание',
+            web_app: { url: process.env.MINI_APP_URL! }
+          }
+        ]]
+      }
+    }
+  )
 }
